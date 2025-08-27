@@ -1,164 +1,238 @@
-import React from 'react';
-
-function Image({ src, alt, layout, objectFit, quality, className, width, height }) {
-  const style = {
-    position: layout === 'fill' ? 'absolute' : 'relative',
-    width: layout === 'fill' ? '100%' : (width ? `${width}px` : 'auto'),
-    height: layout === 'fill' ? '100%' : (height ? `${height}px` : 'auto'),
-    objectFit: objectFit || 'contain'
-  };
-
-  return <img src={src} alt={alt} style={style} className={className} />;
-}
+import React, { useState } from 'react';
 
 const products = [
   {
     id: 1,
     name: 'The Luxe Satchel',
     price: '$250',
-    imageUrl: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=500&fit=crop&crop=center&auto=format&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&h=600&fit=crop&crop=center&auto=format&q=80',
     altText: 'Luxe Satchel',
   },
   {
     id: 2,
     name: 'Classic Silk Scarf',
     price: '$75',
-    imageUrl: 'https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=400&h=500&fit=crop&crop=center&auto=format&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=600&h=600&fit=crop&crop=center&auto=format&q=80',
     altText: 'Classic Silk Scarf',
   },
   {
     id: 3,
     name: 'Elegant Pearl Necklace',
     price: '$180',
-    imageUrl: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=500&fit=crop&crop=center&auto=format&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&h=600&fit=crop&crop=center&auto=format&q=80',
     altText: 'Elegant Pearl Necklace',
   },
   {
     id: 4,
     name: 'Midnight Blue Dress',
     price: '$320',
-    imageUrl: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=400&h=500&fit=crop&crop=center&auto=format&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&h=600&fit=crop&crop=center&auto=format&q=80',
     altText: 'Midnight Blue Dress',
-  },
-  {
-    id: 5,
-    name: 'Elegant Leather Wallet',
-    price: '$95',
-    imageUrl: 'https://images.unsplash.com/photo-1627123424574-724758594e93?w=400&h=500&fit=crop&crop=center&auto=format&q=80',
-    altText: 'Elegant Leather Wallet',
   },
 ];
 
 export default function App() {
+  const [selectedProduct, setSelectedProduct] = useState(products[0]);
+
   return (
-    <div className="min-h-screen bg-[#F5F2EF] text-[#5C4B44]">
+    <div className="min-h-screen bg-gradient-to-br from-[#F8F6F3] via-[#F5F2EF] to-[#F0EBE6] text-[#2C2421]">
       <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
-        body { font-family: 'Inter', sans-serif; }
-        .font-cormorant { font-family: 'Cormorant Garamond', serif; }
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+        body {
+          font-family: 'Inter', sans-serif;
+          overflow-x: hidden;
+        }
+        .font-playfair { font-family: 'Playfair Display', serif; }
+
+        /* Custom animations */
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
+        }
+        .float { animation: float 6s ease-in-out infinite; }
+
+        /* Glassmorphism effect */
+        .glass {
+          background: rgba(255, 255, 255, 0.25);
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        /* Gradient text */
+        .gradient-text {
+          background: linear-gradient(135deg, #A68F80 0%, #8B7355 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
       `}</style>
 
-      <Layout>
-        <main className="flex-grow">
-          {/* Hero Section */}
-          <section className="relative h-[80vh] flex items-center justify-center text-center p-8">
-            <div className="absolute inset-0 overflow-hidden">
-              <img
-                src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1920&h=1080&fit=crop&crop=center&auto=format&q=80"
-                alt="Boutique interior"
-                className="w-full h-full object-cover object-center opacity-80"
-              />
-            </div>
-            <div className="relative z-10 flex flex-col items-center">
-              <h1 className="text-4xl md:text-6xl font-light tracking-widest uppercase mb-4 font-cormorant">
-                Siri Boutique
-              </h1>
-              <p className="text-lg md:text-xl font-light tracking-wide max-w-2xl mx-auto mb-8">
-                Discover curated elegance and exclusive fashion. Each piece tells a story of craftsmanship and style.
-              </p>
-              <a href="#" className="py-3 px-8 bg-[#5C4B44] text-[#F5F2EF] text-sm font-medium uppercase tracking-wide rounded-full hover:bg-[#A68F80] transition-colors duration-300">
-                Shop the Collection
-              </a>
-            </div>
-          </section>
-
-          {/* Featured Products Section */}
-          <section className="py-20 px-4 md:px-12 lg:px-24">
-            <h2 className="text-3xl md:text-4xl font-light text-center mb-12 font-cormorant">
-              Featured Collection
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {products.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-          </section>
-        </main>
-      </Layout>
-    </div>
-  );
-}
-
-function Layout({ children }) {
-  return (
-    <>
-      <header className="fixed top-0 left-0 w-full z-20 bg-[#F5F2EF] bg-opacity-95 backdrop-blur-sm shadow-sm py-4 px-4 md:px-12 lg:px-24">
-        <nav className="flex items-center justify-between">
+      {/* Header */}
+      <header className="fixed top-0 left-0 w-full z-50 glass shadow-lg">
+        <nav className="px-6 lg:px-12 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <svg width="32" height="32" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-              <g fill="none" stroke="#A68F80" strokeWidth="2.5">
-                <path d="M50 35 Q45 25 50 15 Q55 25 50 35" />
-                <path d="M42 40 Q32 30 37 20 Q47 30 42 40" />
-                <path d="M35 50 Q25 40 30 30 Q40 40 35 50" />
-                <path d="M58 40 Q68 30 63 20 Q53 30 58 40" />
-                <path d="M65 50 Q75 40 70 30 Q60 40 65 50" />
-                <path d="M42 55 Q37 65 47 70 Q47 60 42 55" />
-                <path d="M58 55 Q63 65 53 70 Q53 60 58 55" />
-              </g>
-            </svg>
+            <div className="float">
+              <svg width="40" height="40" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="lotus-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#A68F80"/>
+                    <stop offset="100%" stopColor="#8B7355"/>
+                  </linearGradient>
+                </defs>
+                <g fill="none" stroke="url(#lotus-gradient)" strokeWidth="2.5">
+                  <path d="M50 35 Q45 25 50 15 Q55 25 50 35" />
+                  <path d="M42 40 Q32 30 37 20 Q47 30 42 40" />
+                  <path d="M35 50 Q25 40 30 30 Q40 40 35 50" />
+                  <path d="M58 40 Q68 30 63 20 Q53 30 58 40" />
+                  <path d="M65 50 Q75 40 70 30 Q60 40 65 50" />
+                  <path d="M42 55 Q37 65 47 70 Q47 60 42 55" />
+                  <path d="M58 55 Q63 65 53 70 Q53 60 58 55" />
+                </g>
+              </svg>
+            </div>
             <div>
-              <div className="text-xl font-medium text-[#A68F80] font-cormorant">SIRI</div>
-              <div className="text-xs text-[#A68F80] tracking-widest font-light -mt-1">BOUTIQUE</div>
+              <div className="text-2xl font-semibold gradient-text font-playfair">SIRI</div>
+              <div className="text-xs text-[#A68F80] tracking-[0.3em] font-light -mt-1">BOUTIQUE</div>
             </div>
           </div>
-          <ul className="flex space-x-6 md:space-x-10 text-sm md:text-base">
-            <li><a href="#" className="hover:text-[#A68F80] transition-colors font-light">Shop</a></li>
-            <li><a href="#" className="hover:text-[#A68F80] transition-colors font-light">About</a></li>
-            <li><a href="#" className="hover:text-[#A68F80] transition-colors font-light">Contact</a></li>
+          <ul className="hidden md:flex space-x-8 text-sm font-medium">
+            <li><a href="#" className="hover:text-[#A68F80] transition-all duration-300 relative group">
+              Collection
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#A68F80] transition-all duration-300 group-hover:w-full"></span>
+            </a></li>
+            <li><a href="#" className="hover:text-[#A68F80] transition-all duration-300 relative group">
+              About
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#A68F80] transition-all duration-300 group-hover:w-full"></span>
+            </a></li>
+            <li><a href="#" className="hover:text-[#A68F80] transition-all duration-300 relative group">
+              Contact
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#A68F80] transition-all duration-300 group-hover:w-full"></span>
+            </a></li>
           </ul>
         </nav>
       </header>
-      <div className="pt-[80px]">
-        {children}
-      </div>
-      <footer className="bg-[#5C4B44] text-[#F5F2EF] py-12 px-4 md:px-12 lg:px-24">
-        <div className="container mx-auto text-center">
-          <div className="mb-4">
-            <a href="#" className="mx-2 hover:underline">Privacy Policy</a>
-            <span className="mx-2">|</span>
-            <a href="#" className="mx-2 hover:underline">Terms of Service</a>
+
+      {/* Main Content - Single Screen Layout */}
+      <main className="pt-20 min-h-screen flex">
+
+        {/* Left Side - Hero Content */}
+        <div className="w-full lg:w-1/2 flex flex-col justify-center px-6 lg:px-12 py-12">
+          <div className="max-w-lg">
+            <h1 className="text-5xl lg:text-7xl font-light mb-6 font-playfair gradient-text leading-tight">
+              Curated
+              <br />
+              <span className="font-semibold">Elegance</span>
+            </h1>
+            <p className="text-lg text-[#6B5B4F] mb-8 leading-relaxed font-light">
+              Discover exclusive fashion pieces that tell stories of exceptional craftsmanship and timeless style. Each item is carefully selected for the modern connoisseur.
+            </p>
+
+            {/* Quick Stats */}
+            <div className="flex space-x-8 mb-10">
+              <div className="text-center">
+                <div className="text-2xl font-semibold text-[#A68F80] font-playfair">100+</div>
+                <div className="text-sm text-[#8B7355]">Curated Pieces</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-semibold text-[#A68F80] font-playfair">5★</div>
+                <div className="text-sm text-[#8B7355]">Premium Quality</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-semibold text-[#A68F80] font-playfair">24h</div>
+                <div className="text-sm text-[#8B7355]">Fast Shipping</div>
+              </div>
+            </div>
+
+            <button className="group relative px-8 py-4 bg-gradient-to-r from-[#A68F80] to-[#8B7355] text-white rounded-full font-medium text-sm tracking-wide transition-all duration-300 hover:shadow-xl hover:scale-105">
+              <span className="relative z-10">Explore Collection</span>
+              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-[#8B7355] to-[#A68F80] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </button>
           </div>
-          <p className="text-sm font-light">&copy; 2024 Siri Boutique. All rights reserved.</p>
+        </div>
+
+        {/* Right Side - Interactive Product Showcase */}
+        <div className="hidden lg:flex w-1/2 flex-col justify-center items-center px-12 py-12">
+
+          {/* Featured Product Display */}
+          <div className="relative mb-8">
+            <div className="w-80 h-96 rounded-3xl overflow-hidden shadow-2xl transform rotate-3 hover:rotate-0 transition-transform duration-500">
+              <img
+                src={selectedProduct.imageUrl}
+                alt={selectedProduct.altText}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="absolute -bottom-4 -right-4 glass rounded-2xl p-4">
+              <h3 className="font-semibold text-lg font-playfair">{selectedProduct.name}</h3>
+              <p className="text-[#A68F80] font-medium">{selectedProduct.price}</p>
+            </div>
+          </div>
+
+          {/* Product Selector */}
+          <div className="flex space-x-4">
+            {products.map((product, index) => (
+              <button
+                key={product.id}
+                onClick={() => setSelectedProduct(product)}
+                className={`w-16 h-16 rounded-xl overflow-hidden border-2 transition-all duration-300 ${
+                  selectedProduct.id === product.id
+                    ? 'border-[#A68F80] shadow-lg scale-110'
+                    : 'border-transparent hover:border-[#A68F80] opacity-70'
+                }`}
+              >
+                <img
+                  src={product.imageUrl}
+                  alt={product.altText}
+                  className="w-full h-full object-cover"
+                />
+              </button>
+            ))}
+          </div>
+
+          {/* Floating Elements */}
+          <div className="absolute top-20 left-20 glass rounded-full p-3 float" style={{animationDelay: '0s'}}>
+            <div className="w-3 h-3 bg-gradient-to-br from-[#A68F80] to-[#8B7355] rounded-full"></div>
+          </div>
+          <div className="absolute bottom-32 left-32 glass rounded-full p-2 float" style={{animationDelay: '2s'}}>
+            <div className="w-2 h-2 bg-gradient-to-br from-[#A68F80] to-[#8B7355] rounded-full"></div>
+          </div>
+          <div className="absolute top-40 right-16 glass rounded-full p-4 float" style={{animationDelay: '4s'}}>
+            <div className="w-4 h-4 bg-gradient-to-br from-[#A68F80] to-[#8B7355] rounded-full"></div>
+          </div>
+        </div>
+
+        {/* Mobile Product Grid */}
+        <div className="lg:hidden w-full px-6 py-8">
+          <div className="grid grid-cols-2 gap-4">
+            {products.map((product) => (
+              <div key={product.id} className="glass rounded-xl overflow-hidden shadow-lg">
+                <div className="aspect-square">
+                  <img
+                    src={product.imageUrl}
+                    alt={product.altText}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="p-3">
+                  <h3 className="font-medium text-sm font-playfair mb-1">{product.name}</h3>
+                  <p className="text-[#A68F80] font-semibold text-sm">{product.price}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </main>
+
+      {/* Minimal Footer */}
+      <footer className="px-6 lg:px-12 py-6 border-t border-[#E8DED8]">
+        <div className="flex justify-between items-center text-sm text-[#8B7355]">
+          <p>&copy; 2024 Siri Boutique</p>
+          <div className="flex space-x-6">
+            <a href="#" className="hover:text-[#A68F80] transition-colors">Privacy</a>
+            <a href="#" className="hover:text-[#A68F80] transition-colors">Terms</a>
+          </div>
         </div>
       </footer>
-    </>
-  );
-}
-
-function ProductCard({ product }) {
-  return (
-    <div className="bg-[#E8DED8] rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
-      <div className="relative w-full h-80 overflow-hidden">
-        <img
-          src={product.imageUrl}
-          alt={product.altText}
-          className="w-full h-full object-cover object-center"
-        />
-      </div>
-      <div className="p-4 text-center">
-        <h3 className="text-xl font-medium mb-2 font-cormorant">{product.name}</h3>
-        <p className="text-lg font-light text-[#A68F80]">{product.price}</p>
-      </div>
     </div>
   );
 }
