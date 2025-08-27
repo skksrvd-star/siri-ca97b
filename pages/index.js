@@ -62,14 +62,11 @@ export default function App() {
         <main className="flex-grow">
           {/* Hero Section */}
           <section className="relative h-[80vh] flex items-center justify-center text-center p-8">
-            <div className="absolute inset-0">
-              <Image
+            <div className="absolute inset-0 overflow-hidden">
+              <img
                 src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1920&h=1080&fit=crop&crop=center&auto=format&q=80"
                 alt="Boutique interior"
-                layout="fill"
-                objectFit="cover"
-                quality={100}
-                className="opacity-80"
+                className="w-full h-full object-cover object-center opacity-80"
               />
             </div>
             <div className="relative z-10 flex flex-col items-center">
@@ -151,13 +148,11 @@ function Layout({ children }) {
 function ProductCard({ product }) {
   return (
     <div className="bg-[#E8DED8] rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
-      <div className="relative w-full h-80">
-        <Image
+      <div className="relative w-full h-80 overflow-hidden">
+        <img
           src={product.imageUrl}
           alt={product.altText}
-          layout="fill"
-          objectFit="cover"
-          className="rounded-t-lg"
+          className="w-full h-full object-cover object-center"
         />
       </div>
       <div className="p-4 text-center">
