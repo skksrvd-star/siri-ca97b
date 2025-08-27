@@ -80,7 +80,7 @@ export default function App() {
             <div className="relative z-10">
               <div className="w-24 h-24 mx-auto mb-4">
                 <Image
-                  src="https://i.imgur.com/K07o7o4.png" // The correct logo URL from the image provided
+                  src="/images/siri.png" // The correct logo URL from the image provided
                   alt="Siri Boutique Logo"
                   width={200}
                   height={200}
@@ -114,7 +114,7 @@ export default function App() {
 }
 
 function Layout({ children }) {
-  const logoUrl = "https://i.imgur.com/K07o7o4.png"; // The correct logo URL from the image provided
+  const logoUrl = "/images/siri.png"; // The correct logo URL from the image provided
 
   return (
     <>
